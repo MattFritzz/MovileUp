@@ -9,13 +9,13 @@
         <scene sceneID="cQw-lw-rYV">
             <objects>
                 <navigationController id="ycp-bh-Lz1" customClass="CustomNavigationController" customModule="Movile" customModuleProvider="target" sceneMemberID="viewController">
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="2cG-6V-Kol">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="rJe-6Q-PhK" kind="relationship" relationship="rootViewController" id="74n-Oe-8Ug"/>
+                        <segue destination="rJe-6Q-PhK" kind="relationship" relationship="rootViewController" id="a5X-ay-idJ"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lAz-wL-e9i" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -31,17 +31,17 @@
                         <viewControllerLayoutGuide type="bottom" id="tnT-mg-DC3"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="7cn-Go-59d">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Les-fameux-boucliers-Vikings" highlightedImage="Les-fameux-boucliers-Vikings" translatesAutoresizingMaskIntoConstraints="NO" id="luK-bO-k1R">
-                                <rect key="frame" x="0.0" y="64" width="320" height="200"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="1ke-pS-vc1"/>
                                 </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="bg-overlay" translatesAutoresizingMaskIntoConstraints="NO" id="Gth-q0-1ht">
-                                <rect key="frame" x="0.0" y="64" width="320" height="200"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="AN2-Gz-hDY"/>
                                 </constraints>
@@ -53,7 +53,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aoi-Cp-3l4">
-                                <rect key="frame" x="13" y="300" width="294" height="255"/>
+                                <rect key="frame" x="13" y="300" width="349" height="255"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" red="0.35686274509803922" green="0.35686274509803922" blue="0.35686274509803922" alpha="1" colorSpace="calibratedRGB"/>
@@ -101,7 +101,7 @@
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="bannerImage" destination="luK-bO-k1R" id="bBP-ZJ-7lf"/>
                         <outlet property="overviewTextView" destination="aoi-Cp-3l4" id="oAQ-cX-9Ih"/>
@@ -110,7 +110,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kSd-lr-rxN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1595" y="535"/>
+            <point key="canvasLocation" x="1636.5" y="534.5"/>
         </scene>
         <!--Season-->
         <scene sceneID="omX-jQ-2Xr">
@@ -121,11 +121,11 @@
                         <viewControllerLayoutGuide type="bottom" id="eGz-ra-bsh"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Oa5-m7-X6C">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="4Yz-p3-g53">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="BasicCell" rowHeight="60" id="QFk-Qw-kJO" customClass="EpisodesTableViewCell" customModule="Movile" customModuleProvider="target">
@@ -179,13 +179,14 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Season" id="vhh-hr-Z00"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="tableView" destination="4Yz-p3-g53" id="yfX-GF-YK8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LUj-Ve-cgV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="730" y="551"/>
+            <point key="canvasLocation" x="783.5" y="534.5"/>
         </scene>
         <!--Shows-->
         <scene sceneID="0zh-6t-yxL">
@@ -196,11 +197,11 @@
                         <viewControllerLayoutGuide type="bottom" id="RPr-f9-LLp"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="nZH-HU-mHI">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Quu-j6-t27">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ccE-vr-mqs">
                                     <size key="itemSize" width="90" height="158"/>
@@ -276,7 +277,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xEJ-7l-4hY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1233" y="1210"/>
+            <point key="canvasLocation" x="1232.5" y="1262.5"/>
         </scene>
     </scenes>
     <resources>

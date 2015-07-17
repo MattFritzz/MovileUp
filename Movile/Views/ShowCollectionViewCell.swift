@@ -6,4 +6,17 @@
 //  Copyright (c) 2015 Movile. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class ShowCollectionViewCell : UICollectionViewCell {
+    @IBOutlet weak var showImage: UIImageView!
+    @IBOutlet weak var showName: UILabel!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
+    override func prepareForReuse() {
+        return super.prepareForReuse()
+    }
+}
