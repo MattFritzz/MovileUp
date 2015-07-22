@@ -46,7 +46,7 @@ class TraktHTTPClient {
                 case .Show (let id):
                     return ("shows/\(id)", ["extended" : "images, full"], .GET)
                 case .Episode(let id, let season, let number):
-            return ("shows/\(id)/seasons/\(season)/episodes/\(number)", ["extended" : "images"], .GET)
+                    return ("shows/\(id)/seasons/\(season)/episodes/\(number)", ["extended" : "images"], .GET)
                 }
             }()
         
@@ -61,36 +61,26 @@ class TraktHTTPClient {
     }
     
     func getShow(id: String, completion: ((Result<Show, NSError?>) -> Void)?) {
-        manager.request(Router.Show(id)).validate().responseJSON { (_, _, response, error) in
-            
-            if let json = response as? NSDictionary {
-                
-                if let show = Show.decode(json) {
-                    completion?(Result.success(show))
-                } else {
-                    completion?(Result.failure(nil))
-                }
-            } else {
-                completion?(Result.failure(error))
-            }
-        }
+        getJSONObject(Router.Show(id), completion: completion)
     }
     
     func getEpisode(showId: String, season: Int, episodeNumber: Int, completion: ((Result<Episode, NSError?>) -> Void)?) {
-        manager.request(Router.Episode(showId, season, episodeNumber)).validate().responseJSON { (_, _, response, error) in
-            //FAZER GENERICS!!!
-            if let json = response as? NSDictionary {
-                
-                if let episode = Episode.decode(json) {
-                    completion?(Result.success(episode))
+        let episodeRouter = Router.Episode(showId, season, episodeNumber)
+        getJSONObject(episodeRouter, completion: completion)
+    }
+    
+    private func getJSONObject<T: JSONDecodable>(router: Router, completion: ((Result<T, NSError?>) -> Void)?) {
+            manager.request(router).validate().responseJSON { (_, _, response, error) in
+                if let json = response as? NSDictionary {
+                    if let value = T.decode(json) {
+                        completion?(Result.success(value))
+                    } else {
+                        completion?(Result.failure(nil))
+                    }
                 } else {
-                    completion?(Result.failure(nil))
+                    completion?(Result.failure(error))
                 }
-            } else {
-                completion?(Result.failure(error))
             }
-        }
-
     }
     
     
