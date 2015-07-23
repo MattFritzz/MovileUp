@@ -7,25 +7,44 @@
 //
 
 import UIKit
+import Alamofire
+import Result
+import TraktModels
 
 class CollectionViewShowViewController : UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     @IBOutlet weak var showsCollectionView: UICollectionView!
     
-    let showName = ["Band of Brothers", "Planet Earth", "Sherlock", "House of Cards", "Breaking Bad", "Game of Thrones", "Firefly", "The Walking Dead", "Fargo"]
+    var popularShows = [Show]()
+    let trkt = TraktHTTPClient()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        trkt.getPopularShows({ (result) -> Void in
+            self.popularShows = result.value!
+            self.showsCollectionView.reloadData()
+        })
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ShowEpisodes"{
+            if let cell = sender as? ShowCollectionViewCell,
+                indexPath = showsCollectionView.indexPathForCell(cell) {
+                    let vc = segue.destinationViewController as! EpisodesViewController
+                    vc.show = popularShows[indexPath.row]
+            }
+        }
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return showName.count
+        return popularShows.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let identifier = Reusable.CollectionBasicCell.identifier!
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath) as! ShowCollectionViewCell
-        cell.showName.text = showName[indexPath.item]
+        cell.showName.text = self.popularShows[indexPath.item].title
         
         return cell
     }
@@ -48,10 +67,16 @@ class CollectionViewShowViewController : UIViewController, UICollectionViewDeleg
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-            let alert = UIAlertController(title: "Show Info", message: "Show name: " + showName[indexPath.item], preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+        //if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
+          //  self.performSegue("ShowEpisodes", sender: cell)
+        //}
+        
+        
+        //let alert = UIAlertController(title: "Show Info", message: "Show name: " + popularShows[indexPath.item].title, preferredStyle: UIAlertControllerStyle.Alert)
+            //alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
             
-            self.presentViewController(alert, animated: true, completion: nil)
+            //self.presentViewController(alert, animated: true, completion: nil)
     }
+    
     
 }

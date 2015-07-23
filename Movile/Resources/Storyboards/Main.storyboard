@@ -110,7 +110,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kSd-lr-rxN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1636.5" y="534.5"/>
+            <point key="canvasLocation" x="1669.5" y="2017.5"/>
         </scene>
         <!--Season-->
         <scene sceneID="omX-jQ-2Xr">
@@ -181,12 +181,13 @@
                     <navigationItem key="navigationItem" title="Season" id="vhh-hr-Z00"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="tableView" destination="4Yz-p3-g53" id="yfX-GF-YK8"/>
+                        <outlet property="episodesTableView" destination="4Yz-p3-g53" id="mln-bM-F8O"/>
+                        <segue destination="qG9-r7-34Y" kind="show" identifier="EpisodeOverview" id="Q10-zx-TIz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LUj-Ve-cgV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="783.5" y="534.5"/>
+            <point key="canvasLocation" x="1669.5" y="1262.5"/>
         </scene>
         <!--Shows-->
         <scene sceneID="0zh-6t-yxL">
@@ -253,6 +254,7 @@
                                         <connections>
                                             <outlet property="showImage" destination="TWD-uy-gSc" id="ilX-En-A95"/>
                                             <outlet property="showName" destination="CO9-0f-9Ya" id="X1F-bZ-lme"/>
+                                            <segue destination="UEW-Nb-3iU" kind="show" identifier="ShowEpisodes" id="I6J-99-2RJ"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
