@@ -9,6 +9,7 @@ target 'Movile', :exclusive => true do
     pod 'Alamofire'
     pod 'Result'
     pod 'TraktModels', :git => 'https://github.com/marcelofabri/TraktModels.git'
+    pod 'Kingfisher'
 end
 
 target :unit_tests, :exclusive => true do
