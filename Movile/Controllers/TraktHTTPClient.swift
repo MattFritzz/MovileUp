@@ -36,7 +36,7 @@ class TraktHTTPClient {
                 case .Season(let id):
                     return ("shows/\(id)/seasons", ["extended" : "full"], .GET)
                 case .Episodes(let id, let season):
-                    return ("shows/\(id)/seasons/\(season)", ["extended" : "full"], .GET)
+                    return ("shows/\(id)/seasons/\(season)", ["extended" : "full,images"], .GET)
                 }
             }()
         

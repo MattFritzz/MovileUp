@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import Result
 import TraktModels
+import Kingfisher
 
 class CollectionViewShowViewController : UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -44,6 +45,9 @@ class CollectionViewShowViewController : UIViewController, UICollectionViewDeleg
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let identifier = Reusable.CollectionBasicCell.identifier!
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath) as! ShowCollectionViewCell
+        
+        cell.loadShow(popularShows[indexPath.row])
+        
         cell.showName.text = self.popularShows[indexPath.item].title
         
         return cell

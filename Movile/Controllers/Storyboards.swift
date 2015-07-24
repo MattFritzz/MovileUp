@@ -169,6 +169,38 @@ extension UITableView {
 
 //MARK: - ShowOverviewViewController
 
+//MARK: - ShowViewController
+extension ShowViewController { 
+
+    enum Reusable: String, Printable, ReusableViewProtocol {
+        case ShowCell = "ShowCell"
+
+        var kind: ReusableKind? {
+            switch (self) {
+            case ShowCell:
+                return ReusableKind(rawValue: "tableViewCell")
+            default:
+                preconditionFailure("Invalid value")
+                break
+            }
+        }
+
+        var viewType: UIView.Type? {
+            switch (self) {
+            case ShowCell:
+                return ShowSeasonsTableViewCell.self
+            default:
+                return nil
+            }
+        }
+
+        var identifier: String? { return self.description } 
+        var description: String { return self.rawValue }
+    }
+
+}
+
+
 //MARK: - EpisodesViewController
 extension UIStoryboardSegue {
     func selection() -> EpisodesViewController.Segue? {
@@ -241,45 +273,6 @@ extension EpisodesViewController {
 
 
 //MARK: - CollectionViewShowViewController
-extension UIStoryboardSegue {
-    func selection() -> CollectionViewShowViewController.Segue? {
-        if let identifier = self.identifier {
-            return CollectionViewShowViewController.Segue(rawValue: identifier)
-        }
-        return nil
-    }
-}
-
-extension CollectionViewShowViewController { 
-
-    enum Segue: String, Printable, SegueProtocol {
-        case ShowEpisodes = "ShowEpisodes"
-
-        var kind: SegueKind? {
-            switch (self) {
-            case ShowEpisodes:
-                return SegueKind(rawValue: "show")
-            default:
-                preconditionFailure("Invalid value")
-                break
-            }
-        }
-
-        var destination: UIViewController.Type? {
-            switch (self) {
-            case ShowEpisodes:
-                return EpisodesViewController.self
-            default:
-                assertionFailure("Unknown destination")
-                return nil
-            }
-        }
-
-        var identifier: String? { return self.description } 
-        var description: String { return self.rawValue }
-    }
-
-}
 extension CollectionViewShowViewController { 
 
     enum Reusable: String, Printable, ReusableViewProtocol {
