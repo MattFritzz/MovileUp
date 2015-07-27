@@ -29,11 +29,11 @@ class CollectionViewShowViewController : UIViewController, UICollectionViewDeleg
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "ShowEpisodes"{
+        if segue.identifier == "ShowInfo"{
             if let cell = sender as? ShowCollectionViewCell,
                 indexPath = showsCollectionView.indexPathForCell(cell) {
-                    let vc = segue.destinationViewController as! EpisodesViewController
-                    vc.show = popularShows[indexPath.row]
+                    let vc = segue.destinationViewController as! ShowViewController
+                    vc.show = popularShows[indexPath.item]
             }
         }
     }

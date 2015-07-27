@@ -167,9 +167,55 @@ extension UITableView {
 
 //MARK: - CustomNavigationController
 
+//MARK: - TempStoryline
+
 //MARK: - ShowOverviewViewController
 
 //MARK: - ShowViewController
+extension UIStoryboardSegue {
+    func selection() -> ShowViewController.Segue? {
+        if let identifier = self.identifier {
+            return ShowViewController.Segue(rawValue: identifier)
+        }
+        return nil
+    }
+}
+
+extension ShowViewController { 
+
+    enum Segue: String, Printable, SegueProtocol {
+        case SeasonEpisodes = "SeasonEpisodes"
+        case ShowStoryline = "ShowStoryline"
+
+        var kind: SegueKind? {
+            switch (self) {
+            case SeasonEpisodes:
+                return SegueKind(rawValue: "show")
+            case ShowStoryline:
+                return SegueKind(rawValue: "show")
+            default:
+                preconditionFailure("Invalid value")
+                break
+            }
+        }
+
+        var destination: UIViewController.Type? {
+            switch (self) {
+            case SeasonEpisodes:
+                return EpisodesViewController.self
+            case ShowStoryline:
+                return TempStoryline.self
+            default:
+                assertionFailure("Unknown destination")
+                return nil
+            }
+        }
+
+        var identifier: String? { return self.description } 
+        var description: String { return self.rawValue }
+    }
+
+}
 extension ShowViewController { 
 
     enum Reusable: String, Printable, ReusableViewProtocol {
@@ -273,6 +319,45 @@ extension EpisodesViewController {
 
 
 //MARK: - CollectionViewShowViewController
+extension UIStoryboardSegue {
+    func selection() -> CollectionViewShowViewController.Segue? {
+        if let identifier = self.identifier {
+            return CollectionViewShowViewController.Segue(rawValue: identifier)
+        }
+        return nil
+    }
+}
+
+extension CollectionViewShowViewController { 
+
+    enum Segue: String, Printable, SegueProtocol {
+        case ShowInfo = "ShowInfo"
+
+        var kind: SegueKind? {
+            switch (self) {
+            case ShowInfo:
+                return SegueKind(rawValue: "show")
+            default:
+                preconditionFailure("Invalid value")
+                break
+            }
+        }
+
+        var destination: UIViewController.Type? {
+            switch (self) {
+            case ShowInfo:
+                return ShowViewController.self
+            default:
+                assertionFailure("Unknown destination")
+                return nil
+            }
+        }
+
+        var identifier: String? { return self.description } 
+        var description: String { return self.rawValue }
+    }
+
+}
 extension CollectionViewShowViewController { 
 
     enum Reusable: String, Printable, ReusableViewProtocol {

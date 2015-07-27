@@ -28,13 +28,13 @@ class TraktHTTPClient {
             let (path: String, parameters: [String: AnyObject]?, method: Alamofire.Method) = {
                 switch self {
                 case .PopularShows:
-                    return ("shows/popular", ["limit": 50, "extended": "images"], .GET)
+                    return ("shows/popular", ["limit": 50, "extended": "full,images"], .GET)
                 case .Show (let id):
                     return ("shows/\(id)", ["extended" : "images, full"], .GET)
                 case .Episode(let id, let season, let number):
                     return ("shows/\(id)/seasons/\(season)/episodes/\(number)", ["extended" : "images"], .GET)
                 case .Season(let id):
-                    return ("shows/\(id)/seasons", ["extended" : "full"], .GET)
+                    return ("shows/\(id)/seasons", ["extended" : "full,images"], .GET)
                 case .Episodes(let id, let season):
                     return ("shows/\(id)/seasons/\(season)", ["extended" : "full,images"], .GET)
                 }
@@ -66,7 +66,29 @@ class TraktHTTPClient {
     }
     
     func getSeasons(showId: String, completion: ((Result<[Season], NSError?>) -> Void)?) {
-        getJSONArrayObject(Router.Season(showId), completion: completion)
+        var v = [Season]()
+        manager.request(Router.Season(showId)).validate().responseJSON { (_, _, response, error) in
+            if let json = response as? [NSDictionary] {
+                for item in json {
+                    if item["aired_episodes"] as? Int > 0 && item["number"] as? Int > 0 {
+                        if let value = Season.decode(item) {
+                            v.append(value)
+                        } else {
+                            completion?(Result.failure(nil))
+                            v.removeAll(keepCapacity: false)
+                            break
+                        }
+                    }
+                }
+                
+                if v.count > 0 {
+                    completion?(Result.success(v))
+                }
+            } else {
+                completion?(Result.failure(error))
+            }
+        }
+
     }
     
     func getEpisodes(showId: String, season: Int, completion: ((Result<[Episode], NSError?>) -> Void)?) {

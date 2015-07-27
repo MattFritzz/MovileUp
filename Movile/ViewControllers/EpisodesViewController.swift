@@ -17,12 +17,13 @@ class EpisodesViewController : UIViewController, UITableViewDataSource, UITableV
     
     var episodes = [Episode]()
     var show: Show!
+    var season: Season!
     let tktv = TraktHTTPClient()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tktv.getEpisodes(show.identifiers.slug!, season: 1, completion: { (result) -> Void in
+        tktv.getEpisodes(show.identifiers.slug!, season: season.number, completion: { (result) -> Void in
             
             if let episodes = result.value {
                 self.episodes = episodes
