@@ -13,6 +13,9 @@ import TagListView
 import BorderedView
 
 class TempStoryline: UIViewController {
+    
+    @IBOutlet weak var navTitle: UINavigationItem!
+    @IBOutlet weak var favButton: UIButton!
     @IBOutlet weak var showPoster: UIImageView!
     @IBOutlet weak var storyline: UITextView!
     @IBOutlet weak var genres: TagListView!
@@ -20,6 +23,7 @@ class TempStoryline: UIViewController {
     @IBOutlet weak var showRatingNumber: UILabel!
     @IBOutlet weak var tagListView: TagListView!
     let formatter = NSNumberFormatter()
+    let fav = FavoritesManager()
     
     var show: Show!
     
@@ -35,6 +39,10 @@ class TempStoryline: UIViewController {
             showPoster.image = placeholder
         }
         
+        if fav.favoritesIdentifiers.contains(show.identifiers.trakt) {
+            favButton.selected = true
+        }
+        
         storyline.text = show.overview
         
         formatter.decimalSeparator = ","
@@ -48,6 +56,18 @@ class TempStoryline: UIViewController {
             tagListView.addTag(item)
         }
         
+        navTitle.title = show.title
+        
+    }
+    
+    @IBAction func favoriteClicked(sender: UIButton) {
+        if sender.selected == false {
+            fav.addIdentifier(show.identifiers.trakt)
+            sender.selected = true
+        } else {
+            fav.removeIdentifier(show.identifiers.trakt)
+            sender.selected = false
+        }
     }
     
 }

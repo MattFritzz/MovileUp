@@ -26,9 +26,9 @@ class ShowCollectionViewCell : UICollectionViewCell {
         showImage.image = nil
     }
     
-    func loadShow(popularShows: Show) {
+    func loadShow(show: Show) {
         let placeholder = UIImage(named: "poster")
-        if let url = popularShows.poster?.thumbImageURL ?? popularShows.poster?.mediumImageURL ?? popularShows.poster?.fullImageURL {
+        if let url = show.poster?.thumbImageURL ?? show.poster?.mediumImageURL ?? show.poster?.fullImageURL {
             showImage.kf_setImageWithURL(url, placeholderImage: placeholder)
         } else {
             showImage.image = placeholder

@@ -11,21 +11,73 @@ import Alamofire
 import Result
 import TraktModels
 import Kingfisher
+import DZNEmptyDataSet
 
-class CollectionViewShowViewController : UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+extension UINavigationBar {
     
+    func hideBottomHairline() {
+        let navigationBarImageView = hairlineImageViewInNavigationBar(self)
+        navigationBarImageView?.hidden = true
+    }
+    
+    func showBottomHairline() {
+        let navigationBarImageView = hairlineImageViewInNavigationBar(self)
+        navigationBarImageView?.hidden = false
+    }
+    
+    private func hairlineImageViewInNavigationBar(view: UIView) -> UIImageView? {
+        if let imageView = view as? UIImageView where view.bounds.height <= 1.0 {
+            return imageView
+        }
+        
+        let subviews = view.subviews as! [UIView]
+        for subview in subviews {
+            if let imageView = hairlineImageViewInNavigationBar(subview) {
+                return imageView
+            }
+        }
+        
+        return nil
+    }
+    
+}
+
+class CollectionViewShowViewController : UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource {
+    
+    @IBOutlet weak var popFav: UISegmentedControl!
     @IBOutlet weak var showsCollectionView: UICollectionView!
     
     var popularShows = [Show]()
+    var favoriteShows = [Show]()
     let trkt = TraktHTTPClient()
+    let fav = FavoritesManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         trkt.getPopularShows({ (result) -> Void in
             self.popularShows = result.value!
             self.showsCollectionView.reloadData()
         })
+        
+        self.showsCollectionView.emptyDataSetDelegate = self
+        self.showsCollectionView.emptyDataSetSource = self
+        
+        self.navigationController?.navigationBar.hideBottomHairline()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        self.navigationController?.navigationBar.showBottomHairline()
+    }
+    
+    func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+        let att = [NSForegroundColorAttributeName: UIColor.lightGrayColor()]
+        let mensagem = NSAttributedString(string: "No shows found", attributes: att)
+        
+        return mensagem
+    }
+    
+    func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage! {
+        return UIImage(named: "favs")
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -33,22 +85,36 @@ class CollectionViewShowViewController : UIViewController, UICollectionViewDeleg
             if let cell = sender as? ShowCollectionViewCell,
                 indexPath = showsCollectionView.indexPathForCell(cell) {
                     let vc = segue.destinationViewController as! ShowViewController
-                    vc.show = popularShows[indexPath.item]
+                    if popFav.selectedSegmentIndex == 0 {
+                        vc.show = popularShows[indexPath.item]
+                    } else {
+                        vc.show = favoriteShows[indexPath.item]
+                    }
             }
         }
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return popularShows.count
+        if popFav.selectedSegmentIndex == 0 {
+            return popularShows.count
+        } else if popFav.selectedSegmentIndex == 1 {
+            return favoriteShows.count
+        }
+        
+        return 0
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let identifier = Reusable.CollectionBasicCell.identifier!
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath) as! ShowCollectionViewCell
         
-        cell.loadShow(popularShows[indexPath.row])
-        
-        cell.showName.text = self.popularShows[indexPath.item].title
+        if popFav.selectedSegmentIndex == 0 {
+            cell.loadShow(popularShows[indexPath.row])
+            cell.showName.text = self.popularShows[indexPath.item].title
+        } else if popFav.selectedSegmentIndex == 1 {
+            cell.loadShow(favoriteShows[indexPath.row])
+            cell.showName.text = favoriteShows[indexPath.item].title
+        }
         
         return cell
     }
@@ -68,6 +134,21 @@ class CollectionViewShowViewController : UIViewController, UICollectionViewDeleg
         
         return UIEdgeInsets(top: CGFloat(14), left: space,
         bottom: flowLayout.sectionInset.bottom, right: space)
+    }
+    
+    @IBAction func scValueChanged(sender: UISegmentedControl) {
+        self.favoriteShows.removeAll(keepCapacity: true)
+        for item in fav.favoritesIdentifiers {
+            trkt.getShow(String(item), completion: { result in
+                if let favoriteShow = result.value {
+                    self.favoriteShows.append(favoriteShow)
+                    self.showsCollectionView.reloadData()
+                } else {
+                    
+                }
+            })
+        }
+        self.showsCollectionView.reloadData()
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
