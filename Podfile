@@ -14,6 +14,8 @@ target 'Movile', :exclusive => true do
     pod 'FloatRatingView', :git => 'https://github.com/strekfus/FloatRatingView.git'
     pod 'BorderedView'
     pod 'OverlayView', :git => 'https://github.com/marcelofabri/OverlayView.git'
+    pod 'SwiftyUserDefaults'
+    pod 'DZNEmptyDataSet'
 end
 
 target :unit_tests, :exclusive => true do
