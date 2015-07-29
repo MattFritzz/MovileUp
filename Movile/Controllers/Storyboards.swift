@@ -169,6 +169,8 @@ extension UITableView {
 
 //MARK: - TempStoryline
 
+//MARK: - TesteViewController
+
 //MARK: - ShowOverviewViewController
 
 //MARK: - ShowViewController
@@ -185,14 +187,14 @@ extension ShowViewController {
 
     enum Segue: String, Printable, SegueProtocol {
         case SeasonEpisodes = "SeasonEpisodes"
-        case ShowStoryline = "ShowStoryline"
+        case StorylineSegue = "StorylineSegue"
 
         var kind: SegueKind? {
             switch (self) {
             case SeasonEpisodes:
                 return SegueKind(rawValue: "show")
-            case ShowStoryline:
-                return SegueKind(rawValue: "show")
+            case StorylineSegue:
+                return SegueKind(rawValue: "embed")
             default:
                 preconditionFailure("Invalid value")
                 break
@@ -203,8 +205,8 @@ extension ShowViewController {
             switch (self) {
             case SeasonEpisodes:
                 return EpisodesViewController.self
-            case ShowStoryline:
-                return TempStoryline.self
+            case StorylineSegue:
+                return StorylineContainerViewController.self
             default:
                 assertionFailure("Unknown destination")
                 return nil
@@ -388,3 +390,5 @@ extension CollectionViewShowViewController {
 
 }
 
+
+//MARK: - StorylineContainerViewController

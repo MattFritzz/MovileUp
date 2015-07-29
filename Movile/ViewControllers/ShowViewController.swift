@@ -12,12 +12,14 @@ import FloatRatingView
 
 class ShowViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    @IBOutlet weak var storylineContainerHeight: NSLayoutConstraint!
     @IBOutlet weak var seasonsTableView: UITableView!
 
     var show: Show!
     var showSeasons = [Season]()
     let tktv = TraktHTTPClient()
     let formatter = NSNumberFormatter()
+    weak var storylineViewController: StorylineContainerViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +38,12 @@ class ShowViewController: UIViewController, UITableViewDataSource, UITableViewDe
         })
         
         seasonsTableView.tableFooterView = UIView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        storylineContainerHeight.constant = storylineViewController.instrinsicContentSize().height
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -70,6 +78,9 @@ class ShowViewController: UIViewController, UITableViewDataSource, UITableViewDe
         } else if segue.identifier == "ShowStoryline" {
             let vc = segue.destinationViewController as! TempStoryline
             vc.show = show
+        } else if segue.identifier == "StorylineSegue" {
+            storylineViewController = segue.destinationViewController as! StorylineContainerViewController
+            storylineViewController.show = self.show
         }
     }
 }

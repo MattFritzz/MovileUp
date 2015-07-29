@@ -10,6 +10,7 @@ import SwiftyUserDefaults
 
 class FavoritesManager {
     let defaults = NSUserDefaults.standardUserDefaults()
+    static let favoritesChangedNotificationName = "com.movile.favoritesChanged"
     
     var favoritesIdentifiers: Set<Int> {
         var favorites = defaults.objectForKey("favs") as? Array<Int> ?? []

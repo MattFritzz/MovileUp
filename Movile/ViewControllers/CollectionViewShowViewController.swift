@@ -62,10 +62,27 @@ class CollectionViewShowViewController : UIViewController, UICollectionViewDeleg
         self.showsCollectionView.emptyDataSetDelegate = self
         self.showsCollectionView.emptyDataSetSource = self
         
+        //observador para dar reloadData quando um favorito na outra janela é adicionado
+        let name = FavoritesManager.favoritesChangedNotificationName
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        
+        notificationCenter.addObserver(self, selector: "favoritesChanged", name: name, object: nil)
+    }
+    
+    deinit {
+        let name = FavoritesManager.favoritesChangedNotificationName
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.removeObserver(self, name: name, object: nil)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
         self.navigationController?.navigationBar.hideBottomHairline()
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
         self.navigationController?.navigationBar.showBottomHairline()
     }
     
@@ -137,16 +154,18 @@ class CollectionViewShowViewController : UIViewController, UICollectionViewDeleg
     }
     
     @IBAction func scValueChanged(sender: UISegmentedControl) {
+        favoritesChanged()
+        self.showsCollectionView.reloadData()
+    }
+    
+    func favoritesChanged() {
         self.favoriteShows.removeAll(keepCapacity: true)
-        for item in fav.favoritesIdentifiers {
-            trkt.getShow(String(item), completion: { result in
-                if let favoriteShow = result.value {
-                    self.favoriteShows.append(favoriteShow)
-                    self.showsCollectionView.reloadData()
-                } else {
-                    
-                }
-            })
+        
+        for show in popularShows {
+            if fav.favoritesIdentifiers.contains(show.identifiers.trakt) {
+                self.favoriteShows.append(show)
+                self.showsCollectionView.reloadData()
+            }
         }
         self.showsCollectionView.reloadData()
     }

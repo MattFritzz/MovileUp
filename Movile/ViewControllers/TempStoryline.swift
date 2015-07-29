@@ -68,6 +68,10 @@ class TempStoryline: UIViewController {
             fav.removeIdentifier(show.identifiers.trakt)
             sender.selected = false
         }
+        
+        let name = FavoritesManager.favoritesChangedNotificationName
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.postNotificationName(name, object: self)
     }
     
 }
