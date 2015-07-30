@@ -1,27 +1,29 @@
 //
-//  StorylineContainerViewController.swift
+//  ShowDetailsViewController.swift
 //  Movile
 //
-//  Created by iOS on 7/29/15.
+//  Created by iOS on 7/30/15.
 //  Copyright (c) 2015 Movile. All rights reserved.
 //
 
 import UIKit
 import TraktModels
 
-class StorylineContainerViewController: UIViewController, InternalViewController {
+class ShowDetailsViewController: UIViewController, InternalViewController {
 
-    @IBOutlet weak var storylineTextView: UITextView!
+    @IBOutlet weak var detailsTextView: UITextView!
     
     var show: Show!
+    var numberOfSeasons = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        storylineTextView.text = show.overview
-        storylineTextView.textContainer.lineFragmentPadding = 0
-        storylineTextView.textContainerInset = UIEdgeInsetsZero
-        // Do any additional setup after loading the view.
+        let d = "Broadcasting: \nStatus: " + show.status!.rawValue + "\nAired episodes: \(show.airedEpisodes) \nRuntime: \(show.runtime) \nNetwork :\(show.network) \n"
+        
+        detailsTextView.text = d
+        detailsTextView.textContainer.lineFragmentPadding = 0
+        detailsTextView.textContainerInset = UIEdgeInsetsZero
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,11 +32,10 @@ class StorylineContainerViewController: UIViewController, InternalViewController
     }
     
     func intrinsicContentSize() -> CGSize {
-        let height: CGFloat = (self.view.frame.height - storylineTextView.frame.maxY) + storylineTextView.intrinsicContentSize().height + storylineTextView.frame.minY
-        
+        let height = (self.view.frame.height - detailsTextView.frame.maxY) + detailsTextView.intrinsicContentSize().height + detailsTextView.frame.minY
         return CGSize(width: self.view.frame.width, height: height)
     }
-
+    
     /*
     // MARK: - Navigation
 

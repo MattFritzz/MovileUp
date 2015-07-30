@@ -167,10 +167,6 @@ extension UITableView {
 
 //MARK: - CustomNavigationController
 
-//MARK: - TempStoryline
-
-//MARK: - TesteViewController
-
 //MARK: - ShowOverviewViewController
 
 //MARK: - ShowViewController
@@ -186,14 +182,20 @@ extension UIStoryboardSegue {
 extension ShowViewController { 
 
     enum Segue: String, Printable, SegueProtocol {
-        case SeasonEpisodes = "SeasonEpisodes"
         case StorylineSegue = "StorylineSegue"
+        case GenresSegue = "GenresSegue"
+        case DetailsSegue = "DetailsSegue"
+        case SeasonsSegue = "SeasonsSegue"
 
         var kind: SegueKind? {
             switch (self) {
-            case SeasonEpisodes:
-                return SegueKind(rawValue: "show")
             case StorylineSegue:
+                return SegueKind(rawValue: "embed")
+            case GenresSegue:
+                return SegueKind(rawValue: "embed")
+            case DetailsSegue:
+                return SegueKind(rawValue: "embed")
+            case SeasonsSegue:
                 return SegueKind(rawValue: "embed")
             default:
                 preconditionFailure("Invalid value")
@@ -203,10 +205,14 @@ extension ShowViewController {
 
         var destination: UIViewController.Type? {
             switch (self) {
-            case SeasonEpisodes:
-                return EpisodesViewController.self
             case StorylineSegue:
                 return StorylineContainerViewController.self
+            case GenresSegue:
+                return ShowGenresViewController.self
+            case DetailsSegue:
+                return ShowDetailsViewController.self
+            case SeasonsSegue:
+                return ShowSeasonsViewController.self
             default:
                 assertionFailure("Unknown destination")
                 return nil
@@ -218,36 +224,6 @@ extension ShowViewController {
     }
 
 }
-extension ShowViewController { 
-
-    enum Reusable: String, Printable, ReusableViewProtocol {
-        case ShowCell = "ShowCell"
-
-        var kind: ReusableKind? {
-            switch (self) {
-            case ShowCell:
-                return ReusableKind(rawValue: "tableViewCell")
-            default:
-                preconditionFailure("Invalid value")
-                break
-            }
-        }
-
-        var viewType: UIView.Type? {
-            switch (self) {
-            case ShowCell:
-                return ShowSeasonsTableViewCell.self
-            default:
-                return nil
-            }
-        }
-
-        var identifier: String? { return self.description } 
-        var description: String { return self.rawValue }
-    }
-
-}
-
 
 //MARK: - EpisodesViewController
 extension UIStoryboardSegue {
@@ -392,3 +368,78 @@ extension CollectionViewShowViewController {
 
 
 //MARK: - StorylineContainerViewController
+
+//MARK: - ShowSeasonsViewController
+extension UIStoryboardSegue {
+    func selection() -> ShowSeasonsViewController.Segue? {
+        if let identifier = self.identifier {
+            return ShowSeasonsViewController.Segue(rawValue: identifier)
+        }
+        return nil
+    }
+}
+
+extension ShowSeasonsViewController { 
+
+    enum Segue: String, Printable, SegueProtocol {
+        case SeasonEpisodes = "SeasonEpisodes"
+
+        var kind: SegueKind? {
+            switch (self) {
+            case SeasonEpisodes:
+                return SegueKind(rawValue: "show")
+            default:
+                preconditionFailure("Invalid value")
+                break
+            }
+        }
+
+        var destination: UIViewController.Type? {
+            switch (self) {
+            case SeasonEpisodes:
+                return EpisodesViewController.self
+            default:
+                assertionFailure("Unknown destination")
+                return nil
+            }
+        }
+
+        var identifier: String? { return self.description } 
+        var description: String { return self.rawValue }
+    }
+
+}
+extension ShowSeasonsViewController { 
+
+    enum Reusable: String, Printable, ReusableViewProtocol {
+        case ShowCell = "ShowCell"
+
+        var kind: ReusableKind? {
+            switch (self) {
+            case ShowCell:
+                return ReusableKind(rawValue: "tableViewCell")
+            default:
+                preconditionFailure("Invalid value")
+                break
+            }
+        }
+
+        var viewType: UIView.Type? {
+            switch (self) {
+            case ShowCell:
+                return ShowSeasonsTableViewCell.self
+            default:
+                return nil
+            }
+        }
+
+        var identifier: String? { return self.description } 
+        var description: String { return self.rawValue }
+    }
+
+}
+
+
+//MARK: - ShowGenresViewController
+
+//MARK: - ShowDetailsViewController

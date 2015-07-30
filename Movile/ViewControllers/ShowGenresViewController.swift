@@ -1,27 +1,27 @@
 //
-//  StorylineContainerViewController.swift
+//  ShowGenresViewController.swift
 //  Movile
 //
-//  Created by iOS on 7/29/15.
+//  Created by iOS on 7/30/15.
 //  Copyright (c) 2015 Movile. All rights reserved.
 //
 
 import UIKit
 import TraktModels
+import TagListView
 
-class StorylineContainerViewController: UIViewController, InternalViewController {
+class ShowGenresViewController: UIViewController, InternalViewController {
 
-    @IBOutlet weak var storylineTextView: UITextView!
+    @IBOutlet weak var genres: TagListView!
     
     var show: Show!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        storylineTextView.text = show.overview
-        storylineTextView.textContainer.lineFragmentPadding = 0
-        storylineTextView.textContainerInset = UIEdgeInsetsZero
-        // Do any additional setup after loading the view.
+
+        for item in show.genres! {
+            genres.addTag(item)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,11 +30,10 @@ class StorylineContainerViewController: UIViewController, InternalViewController
     }
     
     func intrinsicContentSize() -> CGSize {
-        let height: CGFloat = (self.view.frame.height - storylineTextView.frame.maxY) + storylineTextView.intrinsicContentSize().height + storylineTextView.frame.minY
-        
+        let height = (self.view.frame.height - genres.frame.maxY) + genres.intrinsicContentSize().height + genres.frame.minY
         return CGSize(width: self.view.frame.width, height: height)
     }
-
+    
     /*
     // MARK: - Navigation
 
